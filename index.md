@@ -1,4 +1,5 @@
 ---
-title: Welcome to my blog
+title: Testing Github Pages
 ---
 
+Adding more content here
