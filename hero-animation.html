@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hero Animation Playground</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for animations */
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .gradient-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+        }
+
+        .gradient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.8;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.8) 0%, rgba(118, 75, 162, 0.4) 70%);
+            top: -200px;
+            left: -200px;
+            animation-delay: 0s;
+            animation-duration: 8s;
+        }
+
+        .orb-2 {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(118, 75, 162, 0.6) 0%, rgba(255, 154, 158, 0.3) 70%);
+            top: 60%;
+            right: -150px;
+            animation-delay: -2s;
+            animation-duration: 10s;
+        }
+
+        .orb-3 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 154, 158, 0.4) 0%, rgba(102, 126, 234, 0.2) 70%);
+            bottom: -250px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation-delay: -4s;
+            animation-duration: 12s;
+        }
+
+        .orb-4 {
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(167, 112, 239, 0.5) 0%, rgba(207, 159, 255, 0.2) 70%);
+            top: 20%;
+            right: 20%;
+            animation-delay: -1s;
+            animation-duration: 9s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0px, 0px) rotate(0deg);
+            }
+            33% {
+                transform: translate(30px, -30px) rotate(120deg);
+            }
+            66% {
+                transform: translate(-20px, 20px) rotate(240deg);
+            }
+        }
+
+        /* Mesh gradient overlay */
+        .mesh-gradient {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(120, 219, 255, 0.3) 0%, transparent 50%),
+                linear-gradient(135deg, rgba(102, 126, 234, 0.8) 0%, rgba(118, 75, 162, 0.8) 50%, rgba(255, 154, 158, 0.8) 100%);
+            animation: gradientShift 15s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% {
+                filter: hue-rotate(0deg) saturate(1);
+            }
+            50% {
+                filter: hue-rotate(90deg) saturate(1.2);
+            }
+        }
+
+        /* Financial/Trading pattern overlays */
+        .dot-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 1px 1px, rgba(255,255,255,0.4) 1px, transparent 0);
+            background-size: 20px 20px;
+            animation: patternMove 25s linear infinite;
+            z-index: 3;
+        }
+
+        @keyframes patternMove {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(20px, 20px);
+            }
+        }
+
+        /* Financial grid pattern - like trading charts */
+        .grid-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px),
+                linear-gradient(rgba(102,126,234,0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(102,126,234,0.1) 1px, transparent 1px);
+            background-size: 
+                50px 50px,
+                50px 50px,
+                10px 10px,
+                10px 10px;
+            animation: gridFloat 30s ease-in-out infinite;
+            z-index: 4;
+        }
+
+        @keyframes gridFloat {
+            0%, 100% {
+                transform: translate(0, 0);
+            }
+            25% {
+                transform: translate(-8px, -8px);
+            }
+            50% {
+                transform: translate(-15px, 8px);
+            }
+            75% {
+                transform: translate(8px, -12px);
+            }
+        }
+
+        /* Market data points pattern */
+        .noise-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.2'%3E%3Ccircle cx='40' cy='40' r='1'/%3E%3Ccircle cx='20' cy='20' r='0.5'/%3E%3Ccircle cx='60' cy='20' r='0.8'/%3E%3Ccircle cx='20' cy='60' r='0.6'/%3E%3Ccircle cx='60' cy='60' r='0.7'/%3E%3Crect x='10' y='10' width='1' height='1' fill='%23ffffff' fill-opacity='0.3'/%3E%3Crect x='70' y='30' width='1' height='1' fill='%23ffffff' fill-opacity='0.25'/%3E%3Crect x='30' y='70' width='1' height='1' fill='%23ffffff' fill-opacity='0.3'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            animation: noiseFloat 35s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        @keyframes noiseFloat {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.6;
+            }
+            33% {
+                transform: translate(-12px, -8px) scale(1.02);
+                opacity: 0.8;
+            }
+            66% {
+                transform: translate(8px, -15px) scale(0.98);
+                opacity: 0.7;
+            }
+        }
+
+        /* Financial chart line pattern */
+        .chart-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(45deg, transparent 48%, rgba(102,126,234,0.1) 49%, rgba(102,126,234,0.1) 51%, transparent 52%),
+                linear-gradient(-45deg, transparent 48%, rgba(255,154,158,0.08) 49%, rgba(255,154,158,0.08) 51%, transparent 52%);
+            background-size: 60px 60px, 80px 80px;
+            animation: chartFlow 40s linear infinite;
+            z-index: 3;
+        }
+
+        @keyframes chartFlow {
+            0% {
+                background-position: 0 0, 0 0;
+            }
+            100% {
+                background-position: 60px 60px, -80px 80px;
+            }
+        }
+
+        /* Noise texture overlay */
+        .noise-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.15'%3E%3Ccircle cx='20' cy='20' r='0.5'/%3E%3Ccircle cx='5' cy='10' r='0.3'/%3E%3Ccircle cx='35' cy='15' r='0.4'/%3E%3Ccircle cx='15' cy='35' r='0.3'/%3E%3Ccircle cx='30' cy='5' r='0.4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            animation: noiseFloat 30s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        @keyframes noiseFloat {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.4;
+            }
+            50% {
+                transform: translate(-10px, -10px) scale(1.05);
+                opacity: 0.6;
+            }
+        }
+
+        /* Grid pattern (alternative to dots) */
+        .grid-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: gridFloat 25s ease-in-out infinite;
+            z-index: 4;
+        }
+
+        /* Canvas layer */
+        .canvas-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        #backgroundCanvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* Interactive Effects */
+        .interactive-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+            cursor: pointer;
+        }
+
+        /* Ripple effect */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.1) 50%, transparent 100%);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 7;
+            animation: rippleAnimation 1.2s ease-out forwards;
+        }
+
+        @keyframes rippleAnimation {
+            0% {
+                width: 0;
+                height: 0;
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.6;
+            }
+            100% {
+                width: 400px;
+                height: 400px;
+                opacity: 0;
+            }
+        }
+
+        /* Enhanced hover effects for buttons */
+        .btn-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-hover::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-hover:hover::before {
+            left: 100%;
+        }
+
+        .btn-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="min-h-screen">
+        <!-- Hero Section -->
+        <section class="relative min-h-screen flex items-center justify-center text-center text-white">
+            <!-- Background gradient container -->
+            <div class="absolute inset-0 overflow-hidden">
+                <!-- Canvas layer for advanced effects -->
+                <div class="canvas-layer">
+                    <canvas id="backgroundCanvas"></canvas>
+                </div>
+                
+                <div class="gradient-bg">
+                    <!-- Mesh gradient overlay -->
+                    <div class="mesh-gradient"></div>
+                    
+                    <!-- Financial/Trading pattern overlays (in order of z-index) -->
+                    <!-- <div class="noise-overlay"></div> -->
+                    <div class="chart-pattern"></div>
+                    <!-- <div class="dot-pattern"></div> -->
+                    <div class="grid-pattern"></div>
+                    
+                    <!-- Floating gradient orbs -->
+                    <div class="gradient-orb orb-1"></div>
+                    <div class="gradient-orb orb-2"></div>
+                    <div class="gradient-orb orb-3"></div>
+                    <div class="gradient-orb orb-4"></div>
+                </div>
+                
+                <!-- Interactive layer for JavaScript effects -->
+                <div class="interactive-layer" id="interactiveLayer">
+                    <!-- Ripple effects will be added here dynamically -->
+                </div>
+            </div>
+            
+            <!-- Content -->
+            <div class="relative z-10 max-w-5xl mx-auto px-6">
+                <h1 class="text-5xl md:text-7xl font-bold mb-6">
+                    Where risk advisory expertise<br/>meets scalable fintech
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 opacity-90">
+                    One platform. Powerful insights. Trusted by leading companies.
+                </p>
+                <button class="bg-white text-black px-8 py-4 rounded-full font-semibold text-lg btn-hover">
+                    Start Building
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Canvas Setup and Particle System
+        const canvas = document.getElementById('backgroundCanvas');
+        const ctx = canvas.getContext('2d');
+        let animationId;
+        let particles = [];
+        let mouseX = 0;
+        let mouseY = 0;
+
+        // Canvas resize function
+        function resizeCanvas() {
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * window.devicePixelRatio;
+            canvas.height = rect.height * window.devicePixelRatio;
+            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+            canvas.style.width = rect.width + 'px';
+            canvas.style.height = rect.height + 'px';
+        }
+
+        // Particle class for fluid animations
+        class Particle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.vx = (Math.random() - 0.5) * 1.5;
+                this.vy = (Math.random() - 0.5) * 1.5;
+                this.radius = Math.random() * 12 + 4; // Much bigger particles
+                this.opacity = Math.random() * 1.2 + 0.8; // Much more visible (0.8-2.0)
+                this.hue = Math.random() * 60 + 240; // Blue to purple range
+                this.life = 1;
+                this.decay = Math.random() * 0.001 + 0.0003; // Even slower decay
+                this.angle = Math.random() * Math.PI * 2;
+                this.angleSpeed = (Math.random() - 0.5) * 0.02;
+            }
+
+            update() {
+                // Update position
+                this.x += this.vx;
+                this.y += this.vy;
+                this.angle += this.angleSpeed;
+
+                // Apply stronger mouse attraction
+                const dx = mouseX - this.x;
+                const dy = mouseY - this.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                if (distance < 250) { // Even larger attraction area
+                    const force = (250 - distance) / 250 * 0.08; // Much stronger force
+                    this.vx += dx * force * 0.005;
+                    this.vy += dy * force * 0.005;
+                }
+
+                // Boundary bounce
+                if (this.x < 0 || this.x > canvas.width / window.devicePixelRatio) this.vx *= -0.8;
+                if (this.y < 0 || this.y > canvas.height / window.devicePixelRatio) this.vy *= -0.8;
+
+                // Contain within bounds
+                this.x = Math.max(0, Math.min(canvas.width / window.devicePixelRatio, this.x));
+                this.y = Math.max(0, Math.min(canvas.height / window.devicePixelRatio, this.y));
+
+                // Update life
+                this.life -= this.decay;
+                this.opacity = Math.min(this.life * 1.5, 1.2); // Keep high opacity longer
+
+                // Apply friction
+                this.vx *= 0.98; // Even less friction for more movement
+                this.vy *= 0.98;
+            }
+
+            draw() {
+                if (this.life <= 0) return;
+
+                ctx.save();
+                ctx.globalAlpha = Math.min(this.opacity, 1);
+                
+                // Create stronger gradient for particle
+                const gradient = ctx.createRadialGradient(
+                    this.x, this.y, 0,
+                    this.x, this.y, this.radius * 4
+                );
+                gradient.addColorStop(0, `hsla(${this.hue}, 90%, 80%, 1)`); // Very bright center
+                gradient.addColorStop(0.3, `hsla(${this.hue}, 80%, 70%, 0.8)`);
+                gradient.addColorStop(0.7, `hsla(${this.hue}, 70%, 60%, 0.4)`);
+                gradient.addColorStop(1, `hsla(${this.hue}, 70%, 60%, 0)`);
+                
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Add a very bright center core
+                ctx.fillStyle = `hsla(${this.hue}, 100%, 90%, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius * 0.4, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.restore();
+            }
+
+            isDead() {
+                return this.life <= 0;
+            }
+        }
+
+        // Fluid gradient background
+        function drawFluidBackground() {
+            const time = Date.now() * 0.002; // Faster animation
+            
+            // Create more dramatic fluid gradient
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width / window.devicePixelRatio, canvas.height / window.devicePixelRatio);
+            
+            // More dramatic animated gradient stops
+            const hue1 = 240 + Math.sin(time * 0.5) * 40; // Bigger color shifts
+            const hue2 = 280 + Math.cos(time * 0.3) * 40;
+            const hue3 = 320 + Math.sin(time * 0.7) * 30;
+            
+            gradient.addColorStop(0, `hsla(${hue1}, 80%, 60%, 0.7)`); // More visible
+            gradient.addColorStop(0.3, `hsla(${hue2}, 85%, 65%, 0.6)`);
+            gradient.addColorStop(0.7, `hsla(${hue3}, 90%, 70%, 0.6)`);
+            gradient.addColorStop(1, `hsla(${hue1 + 20}, 75%, 55%, 0.7)`);
+            
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width / window.devicePixelRatio, canvas.height / window.devicePixelRatio);
+            
+            // Add moving waves effect
+            ctx.save();
+            ctx.globalAlpha = 0.3;
+            const waveGradient = ctx.createRadialGradient(
+                (canvas.width / window.devicePixelRatio) / 2 + Math.sin(time) * 100,
+                (canvas.height / window.devicePixelRatio) / 2 + Math.cos(time * 0.8) * 80,
+                0,
+                (canvas.width / window.devicePixelRatio) / 2,
+                (canvas.height / window.devicePixelRatio) / 2,
+                Math.max(canvas.width, canvas.height) / window.devicePixelRatio
+            );
+            waveGradient.addColorStop(0, `hsla(${hue2}, 90%, 80%, 0.4)`);
+            waveGradient.addColorStop(1, 'transparent');
+            ctx.fillStyle = waveGradient;
+            ctx.fillRect(0, 0, canvas.width / window.devicePixelRatio, canvas.height / window.devicePixelRatio);
+            ctx.restore();
+        }
+
+        // Add particles continuously
+        function addParticles() {
+            if (particles.length < 120) { // Even more particles for capital market feel
+                particles.push(new Particle(
+                    Math.random() * (canvas.width / window.devicePixelRatio),
+                    Math.random() * (canvas.height / window.devicePixelRatio)
+                ));
+            }
+        }
+
+        // Animation loop
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width / window.devicePixelRatio, canvas.height / window.devicePixelRatio);
+            
+            // Draw fluid background
+            drawFluidBackground();
+            
+            // Update and draw particles
+            for (let i = particles.length - 1; i >= 0; i--) {
+                particles[i].update();
+                particles[i].draw();
+                
+                if (particles[i].isDead()) {
+                    particles.splice(i, 1);
+                }
+            }
+            
+            // Add new particles more frequently
+            if (Math.random() < 0.6) { // Higher chance
+                addParticles();
+            }
+            
+            animationId = requestAnimationFrame(animate);
+        }
+
+        // Initialize canvas
+        function initCanvas() {
+            resizeCanvas();
+            
+            // Create initial particles
+            for (let i = 0; i < 100; i++) { // Start with many more particles
+                particles.push(new Particle(
+                    Math.random() * (canvas.width / window.devicePixelRatio),
+                    Math.random() * (canvas.height / window.devicePixelRatio)
+                ));
+            }
+            
+            animate();
+        }
+
+        // Mouse tracking for particle interaction
+        document.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            mouseX = (e.clientX - rect.left) * (canvas.width / rect.width) / window.devicePixelRatio;
+            mouseY = (e.clientY - rect.top) * (canvas.height / rect.height) / window.devicePixelRatio;
+        });
+
+        // Handle resize
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+        });
+
+        // Initialize when page loads
+        window.addEventListener('load', initCanvas);
+
+        // Interactive effects JavaScript - Column.com style implementation
+        const interactiveLayer = document.getElementById('interactiveLayer');
+        const heroSection = document.querySelector('section');
+
+        // Click ripple effect - positioned exactly where clicked
+        interactiveLayer.addEventListener('click', function(e) {
+            const rect = interactiveLayer.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            // Create ripple element
+            const ripple = document.createElement('div');
+            ripple.className = 'ripple';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            
+            // Add ripple to interactive layer
+            interactiveLayer.appendChild(ripple);
+            
+            // Add more particles at click location
+            for (let i = 0; i < 10; i++) { // More particles on click
+                const particle = new Particle(
+                    (x / interactiveLayer.offsetWidth) * (canvas.width / window.devicePixelRatio),
+                    (y / interactiveLayer.offsetHeight) * (canvas.height / window.devicePixelRatio)
+                );
+                // Give click particles extra velocity
+                particle.vx = (Math.random() - 0.5) * 4;
+                particle.vy = (Math.random() - 0.5) * 4;
+                particle.radius = Math.random() * 6 + 4; // Bigger click particles
+                particle.opacity = 1; // Full opacity initially
+                particles.push(particle);
+            }
+            
+            // Remove ripple after animation completes
+            setTimeout(() => {
+                if (ripple.parentNode) {
+                    ripple.parentNode.removeChild(ripple);
+                }
+            }, 1200);
+        });
+
+        // Sophisticated parallax effect - orbs respond to mouse position
+        heroSection.addEventListener('mousemove', function(e) {
+            const rect = heroSection.getBoundingClientRect();
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+            
+            // Calculate distance from center (normalized -1 to 1)
+            const deltaX = (mouseX - centerX) / centerX;
+            const deltaY = (mouseY - centerY) / centerY;
+            
+            // Apply subtle movement to gradient orbs based on mouse position
+            const orbs = document.querySelectorAll('.gradient-orb');
+            orbs.forEach((orb, index) => {
+                const multiplier = (index + 1) * 0.8; // Different movement for each orb
+                const moveX = deltaX * multiplier * 15; // Scale the movement
+                const moveY = deltaY * multiplier * 15;
+                
+                orb.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                orb.style.transition = 'transform 0.3s ease-out';
+            });
+        });
+
+        // Reset orb positions when mouse leaves hero area
+        heroSection.addEventListener('mouseleave', function() {
+            const orbs = document.querySelectorAll('.gradient-orb');
+            orbs.forEach(orb => {
+                orb.style.transform = 'translate(0, 0)';
+                orb.style.transition = 'transform 0.5s ease-out';
+            });
+        });
+
+        // Enhanced button interactions
+        const buttons = document.querySelectorAll('.btn-hover');
+        buttons.forEach(button => {
+            button.addEventListener('mouseenter', () => {
+                interactiveLayer.style.cursor = 'pointer';
+            });
+            
+            button.addEventListener('mouseleave', () => {
+                interactiveLayer.style.cursor = 'default';
+            });
+            
+            // Add click ripple to buttons too
+            button.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent double ripple
+                
+                const rect = button.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const ripple = document.createElement('div');
+                ripple.style.position = 'absolute';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.style.width = '0';
+                ripple.style.height = '0';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(0, 0, 0, 0.2)';
+                ripple.style.transform = 'translate(-50%, -50%)';
+                ripple.style.animation = 'rippleAnimation 0.6s ease-out forwards';
+                ripple.style.pointerEvents = 'none';
+                
+                button.style.position = 'relative';
+                button.style.overflow = 'hidden';
+                button.appendChild(ripple);
+                
+                setTimeout(() => {
+                    if (ripple.parentNode) {
+                        ripple.parentNode.removeChild(ripple);
+                    }
+                }, 600);
+            });
+        });
+
+        // Performance optimization - throttle mouse move events
+        let ticking = false;
+        let lastMouseX = 0;
+        let lastMouseY = 0;
+
+        function updateParallax() {
+            const deltaX = (lastMouseX - window.innerWidth / 2) / (window.innerWidth / 2);
+            const deltaY = (lastMouseY - window.innerHeight / 2) / (window.innerHeight / 2);
+            
+            const orbs = document.querySelectorAll('.gradient-orb');
+            orbs.forEach((orb, index) => {
+                const multiplier = (index + 1) * 0.5;
+                const moveX = deltaX * multiplier * 10;
+                const moveY = deltaY * multiplier * 10;
+                
+                orb.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            });
+            
+            ticking = false;
+        }
+
+        // Smooth performance for mouse tracking
+        heroSection.addEventListener('mousemove', function(e) {
+            lastMouseX = e.clientX;
+            lastMouseY = e.clientY;
+            
+            if (!ticking) {
+                requestAnimationFrame(updateParallax);
+                ticking = true;
+            }
+        });
+
+        // Compact Dashboard Animation
+        // Animate counters
+        function animateCounter(element) {
+            const target = parseFloat(element.getAttribute('data-target'));
+            const duration = 2000;
+            const start = performance.now();
+            
+            function update(currentTime) {
+                const elapsed = currentTime - start;
+                const progress = Math.min(elapsed / duration, 1);
+                const current = target * progress;
+                
+                // Handle decimal places for different types
+                if (target >= 100) {
+                    element.textContent = Math.floor(current);
+                } else {
+                    element.textContent = current.toFixed(1);
+                }
+                
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+            
+            requestAnimationFrame(update);
+        }
+
+        // Generate mini bar chart
+        function createMiniBarChart() {
+            const chart = document.getElementById('miniBarChart');
+            if (!chart) return;
+            
+            const heights = [30, 45, 35, 60, 25, 40, 55];
+            const colors = ['#8b5cf6', '#3b82f6', '#06b6d4', '#10b981', '#f59e0b', '#ef4444', '#6366f1'];
+            
+            chart.innerHTML = '';
+            
+            heights.forEach((height, index) => {
+                const bar = document.createElement('div');
+                bar.className = 'mini-bar';
+                bar.style.height = `${height}%`;
+                bar.style.backgroundColor = colors[index];
+                bar.style.animationDelay = `${index * 0.1}s`;
+                chart.appendChild(bar);
+            });
+        }
+
+        // Animate gauge
+        function animateGauge() {
+            const gauge = document.querySelector('.mini-gauge-progress');
+            if (!gauge) return;
+            
+            setTimeout(() => {
+                gauge.style.strokeDashoffset = '40';
+            }, 500);
+        }
+
+        // Intersection Observer for animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Animate counters
+                    const counters = entry.target.querySelectorAll('.mini-counter');
+                    counters.forEach(counter => animateCounter(counter));
+                    
+                    // Animate gauge
+                    animateGauge();
+                    
+                    // Create bar chart
+                    createMiniBarChart();
+                }
+            });
+        }, {
+            threshold: 0.3
+        });
+
+        // Observe the main dashboard when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            const mainDashboard = document.getElementById('mainDashboard');
+            if (mainDashboard) {
+                observer.observe(mainDashboard);
+            }
+        });
+    </script>
+</body>
+</html>
